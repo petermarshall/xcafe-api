@@ -2,12 +2,17 @@ const  { gql } = require ('apollo-server-express');
 
 module.exports = gql`
     scalar DateTime
+type Amenity {
+    id: ID
+    category: String!
+    favoriteCount: Int!
+    favoritedBy: [User!]
+    notes: [Note!]!
+}
 type Note {
     id: ID
     content: String!
     author: User!
-    favoriteCount: Int!
-    favoritedBy: [User!]
     createdAt: DateTime!
     updatedAt: DateTime!
 }
@@ -17,7 +22,7 @@ type User {
     email: String!
     avatar: String!
     notes: [Note!]!
-    favorites: [Note!]!
+    favorites: [Amenity!]!
 }
 type Query{
     notes: [Note]!

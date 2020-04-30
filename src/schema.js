@@ -8,11 +8,27 @@ type Amenity {
     favoriteCount: Int!
     favoritedBy: [User!]
     notes: [Note!]!
+    scores : [Score!]
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+type ScoreType {
+    id: ID
+    name: String!
+}
+type Score {
+    id: ID
+    user : User!
+    scoreType : ScoreType!
+    amenity : Amenity!
+    value : Int!
+    createdAt: DateTime!
+    updatedAt: DateTime!
 }
 type Note {
     id: ID
     content: String!
-    author: User!
+    user: User!
     createdAt: DateTime!
     updatedAt: DateTime!
 }
@@ -22,6 +38,7 @@ type User {
     email: String!
     avatar: String!
     notes: [Note!]!
+    scores: [Score!]
     favorites: [Amenity!]!
 }
 type Query{

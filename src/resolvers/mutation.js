@@ -60,7 +60,7 @@ module.exports = {
                 throw new AuthenticationError('you must be signed in to update a note');
             }
             const note = await models.Note.findById({ _id: id});
-            if(note && String(note.author) !== user.id){
+            if(note && String(note.user) !== user.id){
                 throw new ForbiddenError('You dont have permissions to update this note');
             }
 

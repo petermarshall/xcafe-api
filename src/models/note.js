@@ -9,6 +9,11 @@ const noteSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    amenity: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Amenity',
+        required: true
     }
 },{
     timestamps: true

@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const amenitySchema = new mongoose.Schema({
+    amenityId:{
+        type: Number,
+        required: true
+    },
     category:{
         type: String,
         required: true

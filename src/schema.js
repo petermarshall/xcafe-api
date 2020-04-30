@@ -4,6 +4,7 @@ module.exports = gql`
     scalar DateTime
 type Amenity {
     id: ID
+    amenityId: Int!
     category: String!
     favoriteCount: Int!
     favoritedBy: [User!]
@@ -28,6 +29,7 @@ type Score {
 type Note {
     id: ID
     content: String!
+    amenity: Amenity!
     user: User!
     createdAt: DateTime!
     updatedAt: DateTime!
@@ -49,7 +51,7 @@ type Query{
     me: User!
 }
 type Mutation{
-    newNote(content: String!): Note!
+    newNote(amenityId: Int!, category: String!, content: String!): String!
     updateNote(id: ID!, content: String!): Note!
     deleteNote(id: ID!): Boolean!
     signUp(username: String!, email:String!, password: String!): String!

@@ -17,10 +17,20 @@ module.exports = {
             if(!user){
                 throw new AuthenticationError('user required to create new note.');
             }
-            return await models.Note.create({
+            let amenity = await models.Amenity.find({ amenityId: args.amenityId});
+            if(amenity.length == 0){
+                // we need to create the amenity, it does not exist yet
+                amenity = await models.Amenity.create({
+                    amenityId: args.amenityId,
+                    category: args.category
+                })
+            }
+           const createdNote = await models.Note.create({
+                amenity: mongoose.Types.ObjectId(amenity.id),
                 content: args.content,
-                author: mongoose.Types.ObjectId(user.id)
+                user: mongoose.Types.ObjectId(user.id)
             });
+            return "SUCCESS";
         },
         deleteNote: async (parent, { id }, { models, user }) =>{
             

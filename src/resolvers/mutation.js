@@ -12,6 +12,23 @@ const gravatar = require('../util/gravatar');
 
 module.exports = {
 
+    newScoreType: async (parent, args, { models, user }) => {
+        // check user is passed in
+        if(!user){
+            throw new AuthenticationError('user required to create new note.');
+        }
+        let scoreType = await models.ScoreType.find({ name: args.name});
+        if(scoreType.length == 0){
+            // we need to create the scoretype, it does not exist yet
+            scoreType = await models.ScoreType.create({
+                name: args.name
+            });
+            return "SUCCESS";
+        }else{
+            return "FAILED - score type already exists."
+        }
+     
+    },
         newNote: async (parent, args, { models, user }) => {
             // check user is passed in
             if(!user){

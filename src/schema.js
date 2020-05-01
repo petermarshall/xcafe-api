@@ -51,6 +51,7 @@ type Query{
     me: User!
 }
 type Mutation{
+    newScoreType(name: String!): String!
     newNote(amenityId: Int!, category: String!, content: String!): String!
     updateNote(id: ID!, content: String!): Note!
     deleteNote(id: ID!): Boolean!

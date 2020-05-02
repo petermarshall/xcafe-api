@@ -11,7 +11,34 @@ require('dotenv').config();
 const gravatar = require('../util/gravatar');
 
 module.exports = {
+    newScore: async (parent, args, { models, user }) => {
+        // check user is passed in
+        if(!user){
+            throw new AuthenticationError('user required to create new score.');
+        }
+        
+        let amenity = await models.Amenity.find({ amenityId: args.amenityId});
+        if(amenity.length == 0){
+            // we need to create the amenity, it does not exist yet
+            amenity = await models.Amenity.create({
+                amenityId: args.amenityId,
+                category: args.category
+            })
+        }
+        const scoreType = await models.ScoreType.find({name: args.scoreType});
+        if(scoreType.length == 0){
+            return "Score type id is not valid";
+        }
 
+       const createdScore = await models.Score.create({
+            amenity: mongoose.Types.ObjectId(amenity.id),
+            value: args.value,
+            content: args.content,
+            scoreType:  mongoose.Types.ObjectId(scoreType.id),
+            user: mongoose.Types.ObjectId(user.id)
+        });
+        return "SUCCESS";
+    },
     newScoreType: async (parent, args, { models, user }) => {
         // check user is passed in
         if(!user){

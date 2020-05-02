@@ -49,8 +49,10 @@ type Query{
     user(username: String): User
     users: [User!]!
     me: User!
+    scoreTypes: [ScoreType!]!
 }
 type Mutation{
+    newScore(amenityId: Int!, category: String!, scoreType: String!, value: Int!): String!
     newScoreType(name: String!): String!
     newNote(amenityId: Int!, category: String!, content: String!): String!
     updateNote(id: ID!, content: String!): Note!

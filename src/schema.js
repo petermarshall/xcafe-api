@@ -43,6 +43,12 @@ type User {
     scores: [Score!]
     favorites: [Amenity!]!
 }
+type NoteFeed {
+    notes: [Note]!
+    cursor: String!
+    hasNextPage: Boolean!
+}
+
 type Query{
     notes: [Note]!
     note(id: ID): Note!
@@ -50,6 +56,7 @@ type Query{
     users: [User!]!
     me: User!
     scoreTypes: [ScoreType!]!
+    noteFeed(cursor: String): NoteFeed
 }
 type Mutation{
     newScore(amenityId: Int!, category: String!, scoreType: String!, value: Int!): String!

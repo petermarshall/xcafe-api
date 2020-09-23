@@ -158,13 +158,13 @@ module.exports = {
             if(!user){
                 throw new AuthenticationError('must be signed in to toggle favorite');
             }
-            // check to see if the user has already faviorited this note
-            let noteCheck = await models.Note.findById(id);
-            const hasUser = noteCheck.favoritedBy.indexOf(user.id);
+            // check to see if the user has already faviorited this amenity
+            let amenityCheck = await models.Amenity.findById(id);
+            const hasUser = amenityCheck.favoritedBy.indexOf(user.id);
             // if the user is in the list pull them from the list
             // and decrement the count
             if(hasUser >=0){
-                return await models.Note.findByIdAndUpdate(
+                return await models.Amenity.findByIdAndUpdate(
                     id,
                     {
                         $pull:{
@@ -182,7 +182,7 @@ module.exports = {
             } else {
                 // if the user doesnt exist in the list
                 // add them to the list and incrment the count
-                return await models.Note.findByIdAndUpdate(
+                return await models.Amenity.findByIdAndUpdate(
                     id,
                     {
                         $push:{

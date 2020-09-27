@@ -154,18 +154,28 @@ module.exports = {
 
           return jwt.sign({id: user._id}, process.env.JWT_SECRET);
         },
-        toggleFavorite: async (parent, {id}, {models, user})=>{
+        toggleFavorite: async (parent, args, {models, user})=>{
             if(!user){
                 throw new AuthenticationError('must be signed in to toggle favorite');
             }
-            // check to see if the user has already faviorited this amenity
-            let amenityCheck = await models.Amenity.findById(id);
-            const hasUser = amenityCheck.favoritedBy.indexOf(user.id);
+            let amenity = await models.Amenity.findOne({ amenityId:args.amenityId},
+                function(err, obj){
+                    console.log(obj);
+                });
+            if(!amenity){
+                // we need to create the amenity, it does not exist yet
+                amenity = await models.Amenity.create({
+                    amenityId: args.amenityId,
+                    category: args.category
+                })
+            }
+
+            const hasUser = amenity.favoritedBy.indexOf(user.id);
             // if the user is in the list pull them from the list
             // and decrement the count
             if(hasUser >=0){
                 return await models.Amenity.findByIdAndUpdate(
-                    id,
+                    amenity.id,
                     {
                         $pull:{
                             favoritedBy: mongoose.Types.ObjectId(user.id)
@@ -183,7 +193,7 @@ module.exports = {
                 // if the user doesnt exist in the list
                 // add them to the list and incrment the count
                 return await models.Amenity.findByIdAndUpdate(
-                    id,
+                    amenity.id,
                     {
                         $push:{
                             favoritedBy: mongoose.Types.ObjectId(user.id)

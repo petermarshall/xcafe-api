@@ -57,6 +57,7 @@ type Query{
     me: User!
     scoreTypes: [ScoreType!]!
     noteFeed(cursor: String): NoteFeed
+    amenity(amenityId: Int): Amenity!
 }
 type Mutation{
     newScore(amenityId: Int!, category: String!, scoreType: String!, value: Int!): String!

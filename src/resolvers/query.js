@@ -1,6 +1,8 @@
 
 module.exports = {
-
+    amenity: async (parent, { amenityId },{ models }) => {
+      return await models.Amenity.findOne({amenityId});
+  },
     scoreTypes: async (parent, args, { models }) => {
         return await models.ScoreType.find();
     },

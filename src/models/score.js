@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 
-const noteSchema = new mongoose.Schema({
-    content: {
-        type: String,
+const scoreSchema = new mongoose.Schema({
+    value: {
+        type: Number,
         required: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
+    },
+    scoreType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ScoreType',
         required: true
     },
     amenity: {
@@ -20,6 +25,6 @@ const noteSchema = new mongoose.Schema({
 });
 
 
-const Note = mongoose.model('Note',noteSchema);
+const Score = mongoose.model('Score', scoreSchema);
 
-module.exports = Note;
+module.exports = Score;

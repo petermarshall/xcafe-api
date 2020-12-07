@@ -19,7 +19,10 @@ module.exports = {
         return await models.User.find({});
     },
     me: async (parent, args, {models, user})=>{
-        return await models.User.findById(user.id);
+        console.log('use id:' + user.id);
+        let tUser = await models.User.findById(user.id);
+        console.log(tUser);
+        return tUser;
     },
     noteFeed: async (parent, { cursor }, { models }) => {
         // hard code the limit to 10 items
